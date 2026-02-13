@@ -10,6 +10,7 @@ body {
     background: #0f172a;
     color: #fff;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* NAVBAR */
@@ -33,6 +34,7 @@ header {
 
 nav a {
     margin-left: 25px;
+    display: inline-block;
     text-decoration: none;
     color: #fff;
     transition: 0.3s;
@@ -52,12 +54,12 @@ nav a:hover {
 
 /* HERO */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 10%;
+    padding: 120px 10% 70px;
     background: linear-gradient(135deg, #0f172a, #1e293b);
 }
 
@@ -80,6 +82,7 @@ nav a:hover {
 .hero-buttons a {
     margin: 10px;
     padding: 12px 25px;
+    display: inline-block;
     text-decoration: none;
     border-radius: 30px;
     font-weight: bold;
@@ -202,15 +205,116 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2rem;
+    header {
+        padding: 16px 5%;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    header {
-        padding: 20px 5%;
+    .logo {
+        width: 100%;
+        text-align: center;
+        font-size: 1.35rem;
+    }
+
+    nav {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    nav a {
+        margin: 0;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.12);
+        font-size: 0.95rem;
+    }
+
+    .btn-nav {
+        padding: 7px 14px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 170px 5% 70px;
     }
 
     section {
         padding: 80px 5%;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 28px;
+    }
+
+    .hero p {
+        font-size: 0.98rem;
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .hero-buttons a {
+        margin: 0;
+    }
+
+    .card,
+    .project-card {
+        padding: 22px 18px;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    form input,
+    form textarea,
+    form button {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+
+    nav {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+        padding: 8px 6px;
+        font-size: 0.86rem;
+    }
+
+    .hero {
+        padding-top: 190px;
+    }
+
+    section {
+        padding: 70px 5%;
+    }
+
+    .service-container,
+    .project-container {
+        gap: 16px;
     }
 }
