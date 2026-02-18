@@ -77,5 +77,5 @@ exports.handler = async (event) => {
     return json(500, { ok: false, message: "Failed to save your message. Please try again." });
   }
 
-  return json(200, { ok: true, message: "Thanks. Your message has been received." });
+  return json(200, { ok: true, message: "Thanks. Your message has been received. We will get back to you soon." });
 };
