@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DevGroup | Web & System Solutions</title>
+    <title>NIP | Web & System Solutions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -10,7 +10,7 @@
 
     <!-- NAVBAR -->
     <header>
-        <div class="logo">Group Name</div>
+        <div class="logo">NIP</div>
         <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
             <span></span>
             <span></span>
@@ -46,22 +46,27 @@
 
         <div class="service-container">
             <div class="card">
-                <h3>🌐 Website Development</h3>
+                <h3>Website Development</h3>
                 <p>Modern, responsive websites for businesses, personal brands, and organizations.</p>
             </div>
 
             <div class="card">
-                <h3>⚙️ System Development</h3>
+                <h3>Personal Websites</h3>
+                <p>Professional portfolio websites for individuals who want to showcase their skills and work.</p>
+            </div>
+
+            <div class="card">
+                <h3>System Development</h3>
                 <p>Custom management systems (Hotel, Review Analysis, Admin Panels, Dashboards).</p>
             </div>
 
             <div class="card">
-                <h3>📊 Database Design</h3>
+                <h3>Database Design</h3>
                 <p>Secure, optimized database architecture with role-based management.</p>
             </div>
 
             <div class="card">
-                <h3>🚀 Deployment & Support</h3>
+                <h3>Deployment & Support</h3>
                 <p>We deploy, maintain, and scale your system as your company grows.</p>
             </div>
         </div>
@@ -103,17 +108,29 @@
     <section class="contact" id="contact">
         <h2>Let's Work Together</h2>
 
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Tell us about your project"></textarea>
-            <button type="submit">Send Message</button>
+        <form id="contact-form" novalidate>
+            <label for="name" class="visually-hidden">Your Name</label>
+            <input id="name" type="text" name="name" placeholder="Your Name" required minlength="2" maxlength="80">
+
+            <label for="email" class="visually-hidden">Your Email</label>
+            <input id="email" type="email" name="email" placeholder="Your Email" required>
+
+            <label for="message" class="visually-hidden">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project" required minlength="10" maxlength="2000"></textarea>
+
+            <div class="visually-hidden" aria-hidden="true">
+                <label for="hp">Leave this field empty</label>
+                <input id="hp" type="text" name="hp" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" id="contact-submit">Send Message</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p>© 2026 DevGroup. All Rights Reserved.</p>
+        <p>&copy; 2026 NIP (New Innovation Pioneers). All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -139,6 +156,68 @@
             window.addEventListener("resize", () => {
                 if (window.innerWidth > 768) {
                     closeMenu();
+                }
+            });
+        }
+
+        const contactForm = document.getElementById("contact-form");
+        const contactSubmit = document.getElementById("contact-submit");
+        const formStatus = document.getElementById("form-status");
+
+        if (contactForm && contactSubmit && formStatus) {
+            contactForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                formStatus.textContent = "";
+                formStatus.className = "form-status";
+
+                const formData = new FormData(contactForm);
+                const payload = {
+                    name: String(formData.get("name") || "").trim(),
+                    email: String(formData.get("email") || "").trim(),
+                    message: String(formData.get("message") || "").trim(),
+                    hp: String(formData.get("hp") || "")
+                };
+
+                if (
+                    payload.name.length < 2 ||
+                    payload.name.length > 80 ||
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email) ||
+                    payload.message.length < 10 ||
+                    payload.message.length > 2000
+                ) {
+                    formStatus.textContent = "Please enter valid contact details and a longer message.";
+                    formStatus.classList.add("error");
+                    return;
+                }
+
+                contactSubmit.disabled = true;
+                const defaultButtonText = "Send Message";
+                contactSubmit.textContent = "Sending...";
+
+                try {
+                    const response = await fetch("/.netlify/functions/contact", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+                    if (!response.ok || !result.ok) {
+                        throw new Error(result.message || "Unable to send your message right now.");
+                    }
+
+                    formStatus.textContent = result.message || "Message sent successfully.";
+                    formStatus.classList.add("success");
+                    contactForm.reset();
+                } catch (error) {
+                    formStatus.textContent = error.message || "Something went wrong. Please try again.";
+                    formStatus.classList.add("error");
+                } finally {
+                    contactSubmit.disabled = false;
+                    contactSubmit.textContent = defaultButtonText;
                 }
             });
         }
