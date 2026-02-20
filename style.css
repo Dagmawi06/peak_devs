@@ -9,8 +9,8 @@
 :root {
     --bg: #0c1117;
     --bg-alt: #111823;
-    --surface: #151d28;
-    --surface-strong: #1a2432;
+    --surface: rgba(21, 29, 40, 0.86);
+    --surface-strong: rgba(26, 36, 50, 0.9);
     --text: #e4e8ee;
     --muted: #a7b0bc;
     --accent: #8aa6c1;
@@ -32,6 +32,20 @@
     --space-8: 3.5rem;
 
     --max-width: 1100px;
+}
+
+body[data-theme="light"] {
+    --bg: #f4f5f7;
+    --bg-alt: #eceff3;
+    --surface: rgba(255, 255, 255, 0.92);
+    --surface-strong: rgba(255, 255, 255, 0.95);
+    --text: #1f2933;
+    --muted: #5b6777;
+    --accent: #4a5f72;
+    --accent-strong: #334454;
+    --border: rgba(31, 41, 51, 0.14);
+    --shadow: 0 10px 28px rgba(31, 41, 51, 0.12);
+    --shadow-soft: 0 6px 18px rgba(31, 41, 51, 0.08);
 }
 
 /* =========================
@@ -118,6 +132,19 @@ body::after {
     animation: stars-drift 60s linear infinite, stars-twinkle 8s ease-in-out infinite;
     opacity: 0.6;
     mix-blend-mode: screen;
+}
+
+body[data-theme="light"]::before {
+    background:
+        radial-gradient(900px circle at 10% 15%, rgba(255, 255, 255, 0.9), transparent 55%),
+        radial-gradient(800px circle at 85% 25%, rgba(230, 234, 240, 0.85), transparent 60%),
+        radial-gradient(700px circle at 50% 85%, rgba(220, 224, 231, 0.75), transparent 60%),
+        linear-gradient(140deg, #f5f6f8 0%, #eef1f5 45%, #f3f5f8 100%);
+}
+
+body[data-theme="light"]::after {
+    opacity: 0.28;
+    mix-blend-mode: multiply;
 }
 
 @keyframes night-drift {
@@ -208,6 +235,10 @@ footer {
 section {
     padding: var(--space-8) 10%;
     text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
 }
 
 section > * {
@@ -227,7 +258,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: var(--space-5) 10%;
-    background: rgba(13, 18, 26, 0.92);
+    background: var(--surface);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-soft);
@@ -240,6 +271,7 @@ header {
 nav {
     display: flex;
     align-items: center;
+    margin-left: auto;
 }
 
 .logo {
@@ -289,6 +321,29 @@ nav a {
     background: var(--accent-strong);
 }
 
+/* Theme Toggle */
+.theme-toggle {
+    margin-left: var(--space-4);
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+body[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text);
+}
+
 /* =========================
    HERO
 ========================= */
@@ -299,7 +354,7 @@ nav a {
     align-items: center;
     text-align: center;
     padding: 132px 10% 80px;
-    background: linear-gradient(145deg, rgba(15, 22, 32, 0.92), rgba(20, 28, 40, 0.88));
+    background: linear-gradient(145deg, rgba(15, 22, 32, 0.82), rgba(20, 28, 40, 0.78));
 }
 
 .hero-content {
@@ -364,7 +419,7 @@ form button:active {
 
 .card,
 .project-card {
-    background: var(--surface);
+    background: var(--surface-strong);
     border: 1px solid var(--border);
     padding: 28px;
     border-radius: var(--radius-lg);
@@ -426,6 +481,7 @@ form textarea:focus-visible,
 form button:focus-visible,
 .menu-toggle:focus-visible,
 .btn-nav:focus-visible,
+.theme-toggle:focus-visible,
 .hero-buttons a:focus-visible {
     border-color: color-mix(in srgb, var(--accent) 70%, #ffffff 30%);
     box-shadow: 0 0 0 3px rgba(138, 166, 193, 0.3);
@@ -497,7 +553,7 @@ form button:disabled {
 footer {
     padding: var(--space-5);
     text-align: center;
-    background: rgba(13, 18, 26, 0.9);
+    background: var(--surface);
     border-top: 1px solid var(--border);
     color: var(--muted);
 }
@@ -534,7 +590,7 @@ footer {
         padding: 6px;
         border-radius: 14px;
         border: 1px solid var(--border);
-        background: rgba(13, 18, 26, 0.98);
+        background: var(--surface);
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
         max-height: 0;
         opacity: 0;
