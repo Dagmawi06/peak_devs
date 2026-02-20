@@ -37,16 +37,99 @@
 
 html {
     scroll-behavior: smooth;
+    background: var(--bg);
 }
 
 body {
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    background: radial-gradient(circle at 20% 0%, #14203a 0%, var(--bg) 42%);
+    background: transparent;
     color: var(--text);
     line-height: 1.7;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+}
+
+/* LIVE BACKGROUND */
+.live-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(1200px circle at 10% 20%, rgba(91, 231, 255, 0.16), transparent 55%),
+        radial-gradient(1000px circle at 85% 25%, rgba(76, 111, 255, 0.18), transparent 58%),
+        radial-gradient(900px circle at 50% 85%, rgba(178, 108, 255, 0.16), transparent 60%),
+        radial-gradient(700px circle at 25% 80%, rgba(91, 231, 255, 0.08), transparent 60%),
+        linear-gradient(120deg, #070a12 0%, #0b1020 40%, #0a0f1d 70%, #070a12 100%);
+    background-size: 220% 220%;
+    animation: live-gradient 26s ease-in-out infinite;
+}
+
+.live-bg::before,
+.live-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* Sci-fi grid + vignette */
+.live-bg::before {
+    background-image:
+        linear-gradient(to bottom, rgba(6, 10, 18, 0.15), rgba(6, 10, 18, 0.6)),
+        radial-gradient(circle at 50% 45%, rgba(7, 10, 18, 0) 0%, rgba(7, 10, 18, 0.3) 55%, rgba(5, 8, 14, 0.85) 100%),
+        repeating-linear-gradient(0deg, rgba(91, 231, 255, 0.06) 0, rgba(91, 231, 255, 0.06) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(90deg, rgba(76, 111, 255, 0.05) 0, rgba(76, 111, 255, 0.05) 1px, transparent 1px, transparent 80px);
+    opacity: 0.75;
+    animation: live-grid-pan 22s ease-in-out infinite;
+}
+
+/* Subtle noise overlay */
+.live-bg::after {
+    background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 2px),
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.03) 0, rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 2px);
+    opacity: 0.14;
+    mix-blend-mode: soft-light;
+    animation: live-noise 10s steps(8, end) infinite;
+}
+
+@keyframes live-gradient {
+    0% {
+        background-position: 0% 35%;
+    }
+    50% {
+        background-position: 100% 65%;
+    }
+    100% {
+        background-position: 0% 35%;
+    }
+}
+
+@keyframes live-grid-pan {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(-1.25%, -2%, 0) scale(1.03);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes live-noise {
+    0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 0.14;
+    }
+    50% {
+        transform: translate3d(1.5%, -1.5%, 0);
+        opacity: 0.2;
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+        opacity: 0.14;
+    }
 }
 
 h1,
@@ -528,6 +611,15 @@ footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .live-bg {
+        animation: none;
+        background-size: cover;
+    }
+
+    .live-bg::after {
+        opacity: 0.12;
+    }
+
     *,
     *::before,
     *::after {
