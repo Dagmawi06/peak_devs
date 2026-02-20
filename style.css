@@ -105,9 +105,17 @@ body::after {
         radial-gradient(1px 1px at 520px 120px, rgba(255, 255, 255, 0.8) 0, transparent 2px),
         radial-gradient(1px 1px at 640px 30px, rgba(255, 255, 255, 0.4) 0, transparent 2px),
         radial-gradient(1px 1px at 720px 160px, rgba(255, 255, 255, 0.75) 0, transparent 2px),
-        radial-gradient(1px 1px at 900px 90px, rgba(255, 255, 255, 0.65) 0, transparent 2px);
-    background-size: 1000px 400px;
-    animation: stars-drift 60s linear infinite;
+        radial-gradient(1px 1px at 900px 90px, rgba(255, 255, 255, 0.65) 0, transparent 2px),
+        radial-gradient(1px 1px at 60px 180px, rgba(255, 255, 255, 0.5) 0, transparent 2px),
+        radial-gradient(1px 1px at 180px 220px, rgba(255, 255, 255, 0.7) 0, transparent 2px),
+        radial-gradient(1px 1px at 320px 200px, rgba(255, 255, 255, 0.45) 0, transparent 2px),
+        radial-gradient(1px 1px at 460px 240px, rgba(255, 255, 255, 0.6) 0, transparent 2px),
+        radial-gradient(1px 1px at 600px 210px, rgba(255, 255, 255, 0.55) 0, transparent 2px),
+        radial-gradient(1px 1px at 760px 230px, rgba(255, 255, 255, 0.65) 0, transparent 2px),
+        radial-gradient(1px 1px at 880px 220px, rgba(255, 255, 255, 0.5) 0, transparent 2px);
+    background-size: 800px 320px;
+    background-position: 0 0;
+    animation: stars-drift 60s linear infinite, stars-twinkle 8s ease-in-out infinite;
     opacity: 0.6;
     mix-blend-mode: screen;
 }
@@ -126,10 +134,20 @@ body::after {
 
 @keyframes stars-drift {
     0% {
-        transform: translate3d(0, 0, 0);
+        background-position: 0 0;
     }
     100% {
-        transform: translate3d(-10%, -6%, 0);
+        background-position: -300px 200px;
+    }
+}
+
+@keyframes stars-twinkle {
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.75;
     }
 }
 
