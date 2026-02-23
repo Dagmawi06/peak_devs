@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://new-inovation-pioneers.netlify.app/sitemap.xml
