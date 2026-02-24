@@ -15,6 +15,9 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NIP | Web & System Solutions">
     <meta name="twitter:description" content="NIP builds modern websites, management systems, and custom software solutions for businesses.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -28,9 +31,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Live background layer (behind all content) -->
-    <div class="live-bg" aria-hidden="true"></div>
-
     <!-- NAVBAR -->
     <header>
         <div class="logo">NIP</div>
@@ -46,19 +46,18 @@
             <a href="#about">About</a>
             <a href="#contact" class="btn-nav">Contact</a>
         </nav>
-        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle light mode">
-            Light mode
-        </button>
     </header>
 
     <!-- HERO SECTION -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>We Build Modern <span>Websites</span> & <span>Systems</span></h1>
+            <p class="eyebrow">New Innovation Pioneers</p>
+            <h1>Innovating the <span>Digital Future</span></h1>
             <p>
-                We help businesses transform digitally by building high-performance websites,
-                management systems, and custom software solutions.
+                We build modern websites, secure systems, and scalable software for businesses
+                and organizations in Addis Ababa, Ethiopia and beyond.
             </p>
+            <p class="location">Location: Addis Ababa, Ethiopia</p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn-primary">View Our Work</a>
                 <a href="#contact" class="btn-secondary">Work With Us</a>
@@ -248,24 +247,6 @@
             });
         }
 
-        const themeToggle = document.querySelector(".theme-toggle");
-        if (themeToggle) {
-            const applyTheme = (theme) => {
-                document.body.dataset.theme = theme;
-                const isLight = theme === "light";
-                themeToggle.setAttribute("aria-pressed", String(isLight));
-                themeToggle.textContent = isLight ? "Dark mode" : "Light mode";
-            };
-
-            const storedTheme = localStorage.getItem("nip-theme");
-            applyTheme(storedTheme || "dark");
-
-            themeToggle.addEventListener("click", () => {
-                const nextTheme = document.body.dataset.theme === "light" ? "dark" : "light";
-                applyTheme(nextTheme);
-                localStorage.setItem("nip-theme", nextTheme);
-            });
-        }
     </script>
 </body>
 </html>
