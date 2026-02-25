@@ -33,7 +33,10 @@
 <body>
     <!-- NAVBAR -->
     <header>
-        <div class="logo">NIP</div>
+        <div class="logo">
+            <span class="logo-main">NIP</span>
+            <span class="logo-sub">New Innovation Pioneers</span>
+        </div>
         <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">
             <span></span>
             <span></span>
@@ -51,13 +54,20 @@
     <!-- HERO SECTION -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <p class="eyebrow">New Innovation Pioneers</p>
-            <h1>Innovating the <span>Digital Future</span></h1>
-            <p>
-                We build modern websites, secure systems, and scalable software for businesses
-                and organizations in Addis Ababa, Ethiopia and beyond.
+            <p class="eyebrow">Grow Your Digital Presence</p>
+            <h1>Your Growth Starts With <span>Smart Digital Strategy</span></h1>
+            <p class="hero-copy">
+                NIP designs and builds modern websites, custom systems, and business software
+                that help teams scale with confidence.
             </p>
-            <p class="location">Location: Addis Ababa, Ethiopia</p>
+
+            <div class="hero-visual">
+                <div class="float-card card-left">Build faster with modern architecture</div>
+                <img src="lapto.jpg.jpg" alt="Laptop showcase for web and system solutions" class="hero-laptop">
+                <div class="float-card card-right">Secure systems that unlock growth</div>
+            </div>
+
+            <p class="location">Addis Ababa, Ethiopia</p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn-primary">View Our Work</a>
                 <a href="#contact" class="btn-secondary">Work With Us</a>
@@ -66,7 +76,7 @@
     </section>
 
     <!-- SERVICES -->
-    <section class="services" id="services">
+    <section class="services reveal-group" id="services">
         <h2>What We Do</h2>
 
         <div class="service-container">
@@ -98,7 +108,7 @@
     </section>
 
     <!-- PROJECTS -->
-    <section class="projects" id="projects">
+    <section class="projects reveal-group" id="projects">
         <h2>Our Projects</h2>
 
         <div class="project-container">
@@ -120,7 +130,7 @@
     </section>
 
     <!-- ABOUT -->
-    <section class="about" id="about">
+    <section class="about reveal-group" id="about">
         <h2>About Us</h2>
         <p>
             We are a team of passionate developers specializing in backend development,
@@ -130,7 +140,7 @@
     </section>
 
     <!-- CONTACT -->
-    <section class="contact" id="contact">
+    <section class="contact reveal-group" id="contact">
         <h2>Let's Work Together</h2>
 
         <form id="contact-form" novalidate>
@@ -245,6 +255,22 @@
                     contactSubmit.textContent = defaultButtonText;
                 }
             });
+        }
+
+        const revealTargets = document.querySelectorAll(".reveal-group, .card, .project-card");
+        if ("IntersectionObserver" in window && revealTargets.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.16 });
+
+            revealTargets.forEach((element) => observer.observe(element));
+        } else {
+            revealTargets.forEach((element) => element.classList.add("is-visible"));
         }
 
     </script>
