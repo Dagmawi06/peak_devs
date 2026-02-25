@@ -54,7 +54,7 @@ header {
     z-index: 30;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 0.8rem;
     padding: 0.9rem 1rem;
     border-bottom: 1px solid var(--line);
@@ -62,10 +62,20 @@ header {
     backdrop-filter: blur(8px);
 }
 
+header::before {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    top: 0.66rem;
+    width: 42px;
+    height: 42px;
+}
+
 .logo {
     display: flex;
     flex-direction: column;
     line-height: 1.05;
+    text-align: center;
 }
 
 .logo-main {
@@ -82,6 +92,9 @@ header {
 }
 
 .menu-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 0.66rem;
     width: 42px;
     height: 42px;
     border: 1px solid #d7dbe5;
@@ -157,9 +170,12 @@ section h2 {
 }
 
 .hero-content {
-    width: 100%;
+    width: min(100%, 900px);
+    margin-inline: auto;
     display: grid;
     gap: 1.2rem;
+    justify-items: center;
+    text-align: center;
 }
 
 .eyebrow {
@@ -182,9 +198,12 @@ section h2 {
 .hero-copy {
     color: var(--muted);
     max-width: 60ch;
+    margin-inline: auto;
 }
 
 .hero-visual {
+    width: min(100%, 720px);
+    margin-inline: auto;
     position: relative;
     background: linear-gradient(145deg, #ffffff, #fff6e6);
     border: 1px solid #eddcc1;
@@ -194,12 +213,14 @@ section h2 {
     display: grid;
     justify-items: center;
     gap: 0.8rem;
+    isolation: isolate;
 }
 
 .hero-laptop {
     width: min(100%, 420px);
     border-radius: 10px;
     box-shadow: 0 12px 24px rgba(39, 42, 56, 0.18);
+    animation: laptop-float 4.2s ease-in-out infinite;
 }
 
 .float-card {
@@ -212,6 +233,11 @@ section h2 {
     font-size: 0.88rem;
     font-weight: 700;
     text-align: center;
+    animation: card-bob 5.2s ease-in-out infinite;
+}
+
+.card-right {
+    animation-delay: 0.7s;
 }
 
 .location {
@@ -222,6 +248,7 @@ section h2 {
 .hero-buttons {
     display: grid;
     gap: 0.65rem;
+    width: min(100%, 460px);
 }
 
 .hero-buttons a {
@@ -254,6 +281,30 @@ section h2 {
     box-shadow: var(--shadow);
     margin-bottom: 1rem;
     overflow: hidden;
+}
+
+.hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: auto 12% 16% 12%;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(15, 118, 110, 0.32), rgba(15, 118, 110, 0));
+    filter: blur(6px);
+    z-index: -1;
+}
+
+.hero-visual::after {
+    content: "";
+    position: absolute;
+    width: 78%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px dashed rgba(180, 133, 41, 0.35);
+    top: 10%;
+    left: 11%;
+    z-index: -1;
+    animation: spin-slow 16s linear infinite;
 }
 
 .services::before,
@@ -405,6 +456,18 @@ footer {
         display: none;
     }
 
+    header::before {
+        display: none;
+    }
+
+    .logo {
+        position: absolute;
+        left: 6%;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: left;
+    }
+
     nav {
         position: static;
         opacity: 1;
@@ -439,18 +502,14 @@ footer {
     }
 
     .hero-content {
-        grid-template-columns: 1.02fr 0.98fr;
-        align-items: center;
-        column-gap: 1.4rem;
-    }
-
-    .hero-content > :not(.hero-visual) {
-        text-align: left;
+        max-width: 900px;
+        justify-items: center;
+        text-align: center;
     }
 
     .hero-buttons {
         grid-template-columns: repeat(2, minmax(0, 220px));
-        justify-content: start;
+        justify-content: center;
     }
 
     .hero-visual {
@@ -458,7 +517,7 @@ footer {
     }
 
     .float-card {
-        text-align: left;
+        text-align: center;
     }
 
     .service-container,
@@ -469,6 +528,35 @@ footer {
     .service-container .card:nth-child(4),
     .service-container .card:nth-child(5) {
         grid-column: span 1;
+    }
+}
+
+@keyframes laptop-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+@keyframes card-bob {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
 
@@ -485,5 +573,11 @@ footer {
     .project-card {
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .hero-laptop,
+    .float-card,
+    .hero-visual::after {
+        animation: none !important;
     }
 }
