@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    line-height: 1.6;
+    transition: background-color 0.3s ease;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #00bcd4;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #00bcd4;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #00bcd4;
+}
+
+.hero .cta-button {
+    background-color: #00bcd4;
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hero .cta-button:hover {
+    background-color: #0097a7;
+}
+
+.section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #00bcd4;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial {
+    font-style: italic;
+    margin: 1rem 0;
+}
+
+footer {
+    background-color: #1c1c1c;
+    padding: 2rem;
+    text-align: center;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .section h2 {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+}
