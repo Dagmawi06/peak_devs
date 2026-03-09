@@ -198,17 +198,40 @@ const contactForm = document.getElementById("contact-form");
 const contactSubmit = document.getElementById("contact-submit");
 const formStatus = document.getElementById("form-status");
 
+// helpers for security and UX
+function escapeHtml(str) {
+    return str.replace(/[&<>"]+/g, (tag) => {
+        const chars = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;'
+        };
+        return chars[tag] || tag;
+    });
+}
+
+let lastSubmission = 0; // simple throttle (ms)
+
 if (contactForm && contactSubmit && formStatus) {
     contactForm.addEventListener("submit", async (event) => {
         event.preventDefault();
+        const now = Date.now();
+        if (now - lastSubmission < 5000) { // 5s throttle
+            formStatus.textContent = "Please wait a few seconds before trying again.";
+            formStatus.classList.add("error");
+            return;
+        }
+        lastSubmission = now;
+
         formStatus.textContent = "";
         formStatus.className = "form-status";
 
         const formData = new FormData(contactForm);
         const payload = {
-            name: String(formData.get("name") || "").trim(),
-            email: String(formData.get("email") || "").trim(),
-            message: String(formData.get("message") || "").trim(),
+            name: escapeHtml(String(formData.get("name") || "").trim()),
+            email: escapeHtml(String(formData.get("email") || "").trim()),
+            message: escapeHtml(String(formData.get("message") || "").trim()),
             hp: String(formData.get("hp") || "")
         };
 
@@ -238,10 +261,17 @@ if (contactForm && contactSubmit && formStatus) {
             const result = await response.json();
             if (!response.ok || !result.ok) throw new Error(result.message || "Unable to send your message right now.");
 
+            // analytics / logging example
+            if (window.dataLayer) {
+                window.dataLayer.push({ event: 'contactSuccess' });
+            }
+
             formStatus.textContent = result.message || "Message sent successfully.";
             formStatus.classList.add("success");
             contactForm.reset();
         } catch (error) {
+            // log to external service if configured
+            console.error('Contact form error', error);
             formStatus.textContent = error.message || "Something went wrong. Please try again.";
             formStatus.classList.add("error");
         } finally {
